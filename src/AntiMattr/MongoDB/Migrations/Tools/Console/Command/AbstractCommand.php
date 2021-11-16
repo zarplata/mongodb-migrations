@@ -66,6 +66,11 @@ abstract class AbstractCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ): Configuration {
+        if ($this->getApplication()->getHelperSet()->has('mongoMigrationsConfig')) {
+		    return $this->getHelper('mongoMigrationsConfig')
+			    ->getConfig();
+	    }
+        
         if (!$this->configuration) {
             $conn = $this->getDatabaseConnection($input);
 
